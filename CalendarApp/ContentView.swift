@@ -17,9 +17,11 @@ struct DateType {
 
 struct ContentView: View {
     var body: some View {
-
-        Home()
-            
+        NavigationView {
+            Home()
+            .navigationTitle("Islamic Calendar")
+        }
+       
     }
 }
 
@@ -29,141 +31,281 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
 struct Home: View {
     
     @State var date = Date()
-    @State var data : DateType!
+    @State var GregorianDateDdata : DateType!
+    @State var selectedDateData : DateType!
     
     var body: some View {
-        
-        GeometryReader{ geometry in
-            VStack{
-                if self.data != nil {
-                    ZStack{
-                        VStack(spacing:15) {
-                            ZStack { // Month
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text(self.data.Month)
-                                        .font(.title)
-                                        .foregroundColor(Color.white)
-                                    
-                                    Spacer()
-                                }
-                                .padding(.vertical)
-                                
-                                HStack {
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .month, value: -1, to: self.date)!
+
+            GeometryReader{ geometry in
+                ScrollView {
+
+                    HStack{
                                         
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.left")
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .month, value: 1, to: self.date)!
-                                        
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.right")
-                                    }
-                                }
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 30)
-                            }
-                            .background(Color.red)
+                        if self.GregorianDateDdata != nil {
                             
-                            ZStack {
+                            // FIRST CALENDAR
+                            
+                            ZStack{
                                 VStack {
-                                    Text(self.data.Date)
-                                        .font(.system(size: 65))
-                                        .fontWeight(.bold)
+                                    ZStack { // Month
+                                        HStack {
+                                            Spacer()
+                                            
+                                            Text(self.GregorianDateDdata.Month)
+                                                .font(.subheadline)
+                                                .foregroundColor(Color.white)
+                                            
+                                            Spacer()
+                                        }
+                                        .padding(.vertical)
+                                        
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .month, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left")
+                                                    .font(.subheadline)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .month, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 10)
+                                    }
+                                    .background(Color.red)
                                     
-                                    Text(self.data.Day)
-                                        .font(.title)
+                                    ZStack {
+                                        VStack {
+                                            Text(self.GregorianDateDdata.Date)
+                                                .font(.system(size: 45))
+                                                .fontWeight(.bold)
+                                            
+                                            Text(self.GregorianDateDdata.Day)
+                                                .font(.subheadline)
+                                        }
+                                        
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .day, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left")
+                                                    .font(.subheadline)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .day, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.black)
+                                        .padding(.horizontal, 10)
+                                    }
+                                    
+                                    Divider()
+                                    
+                                    ZStack { // Year
+                                        Text(self.GregorianDateDdata.Year)
+                                            .font(.subheadline)
+                                        
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .year, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left")
+                                                    .font(.subheadline)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .year, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.black)
+                                        
+                                        .padding(.horizontal, 10)
+                                    }
+                                    .padding(.bottom, 12)
                                 }
                                 
-                                HStack {
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .day, value: -1, to: self.date)!
-                                        
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.left")
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .day, value: 1, to: self.date)!
-                                        
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.right")
-                                    }
-                                }
-                                .foregroundColor(.black)
-                                .padding(.horizontal, 30)
                             }
+                            .background(Color.white)
+                            .cornerRadius(15)
+//                            .padding(.horizontal, 50)
+                            .padding()
+//                            Divider()
+//
+                            Text(">>>")
+
+//                            Divider()
                             
-                            Divider()
+                            // SELECTED CALENDAR
                             
-                            ZStack { // Year
-                                Text(self.data.Year)
-                                    .font(.title)
-                                
-                                HStack {
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .year, value: -1, to: self.date)!
+                            ZStack{
+                                VStack {
+                                    ZStack { // Month
+                                        HStack {
+                                            Spacer()
+                                            
+                                            Text(self.selectedDateData.Month)
+                                                .font(.subheadline)
+                                                .foregroundColor(Color.white)
+                                            
+                                            Spacer()
+                                        }
+                                        .padding(.vertical)
                                         
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.left")
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .month, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left")
+                                                    .font(.subheadline)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .month, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 10)
+                                    }
+                                    .background(Color.black)
+                                    
+                                    ZStack {
+                                        VStack {
+                                            Text(self.selectedDateData.Date)
+                                                .font(.system(size: 45))
+                                                .fontWeight(.bold)
+                                            
+                                            Text(self.selectedDateData.Day)
+                                                .font(.subheadline)
+                                        }
+                                        
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .day, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left")
+                                                    .font(.subheadline)
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .day, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.black)
+                                        .padding(.horizontal, 10)
                                     }
                                     
-                                    Spacer()
+                                    Divider()
                                     
-                                    Button(action: {
-                                        self.date = Calendar.current.date(byAdding: .year, value: 1, to: self.date)!
+                                    ZStack { // Year
+                                        Text(self.selectedDateData.Year)
+                                            .font(.subheadline)
                                         
-                                        self.updateDate()
-                                    }) {
-                                        Image(systemName: "arrow.right")
+                                        HStack {
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .year, value: -1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.left") .font(.subheadline)
+                                                
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                self.date = Calendar.current.date(byAdding: .year, value: 1, to: self.date)!
+                                                
+                                                self.updateDate()
+                                            }) {
+                                                Image(systemName: "arrow.right")
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                        .foregroundColor(.black)
+                                        
+                                        .padding(.horizontal, 10)
                                     }
+                                    .padding(.bottom, 12)
                                 }
-                                .foregroundColor(.black)
                                 
-                                .padding(.horizontal, 30)
                             }
-                            .padding(.bottom, 12)
+                            .background(Color.white)
+                            .cornerRadius(15)
+//                            .padding(.horizontal, 50)
+                            .padding()
                         }
-                        
-                       
                     }
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .padding(.horizontal, 50)
+//                    .frame(width: geometry.size.width)
+//                    .padding(.top, 30)
+                
                 }
+                
             }
-            .frame(width: geometry.size.width, height: geometry.size.height)
-        }
-        .background(Color.black.opacity(0.06)
-        .edgesIgnoringSafeArea(.all)
-        .onTapGesture {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MMM-YYYYY"
-            print(formatter.string(from: self.date))
-        }
-        )
-        .onAppear {
-            self.updateDate()
-        }
+            .background(Color.black.opacity(0.06)
+            .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd-MMM-YYYYY"
+                print(formatter.string(from: self.date))
+            }
+            )
+            
+            .onAppear {
+                self.updateDate()
+            }
         
-  
     }
     
     
@@ -179,7 +321,29 @@ struct Home: View {
         let year = current.component(.year, from: self.date)
         
         
-        self.data = DateType(Date: "\(date)", Day: day, Month: "\(month)", Year: "\(year)")
+                        
+        let dateFor = DateFormatter()
+
+         let hijriCalendar = Calendar.init(identifier: Calendar.Identifier.islamicCivil)
+         dateFor.locale = Locale.init(identifier: "ar") // or "en" as you want to show numbers
+
+         dateFor.calendar = hijriCalendar
+
+        let datecurrent = Calendar.init(identifier: Calendar.Identifier.islamicCivil)
+        
+        let Selecteddate = datecurrent.component(.day, from: self.date)
+        let SelectedweakNo = datecurrent.component(.weekday, from: self.date)
+        let Selectedday = current.weekdaySymbols[SelectedweakNo - 1]
+        let SelectedmonthNo = datecurrent.component(.month, from: self.date)
+        let Selectedmonth = datecurrent.monthSymbols[SelectedmonthNo - 1]
+        let Selectedyear = datecurrent.component(.year, from: self.date)
+        
+        self.GregorianDateDdata = DateType(Date: "\(date)", Day: day, Month: "\(month)", Year: "\(year)")
+        
+        
+        self.selectedDateData = DateType(Date: "\(Selecteddate)", Day: Selectedday, Month: "\(Selectedmonth)", Year: "\(Selectedyear)")
+        
+        
     }
 }
 
