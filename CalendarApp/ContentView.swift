@@ -18,11 +18,14 @@ struct DateType {
 struct ContentView: View {
     var body: some View {
         NavigationView {
-            Home()
-            .navigationTitle("Islamic Calendar")
+            ZStack {
+                RadialGradient(gradient: Gradient(colors: [.pink, .red]), center: .center, startRadius: 100, endRadius: 470)
+                    .edgesIgnoringSafeArea(.all)
+                Home()
+            }
         }
-       
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -42,7 +45,6 @@ struct Home: View {
 
             GeometryReader{ geometry in
                 ScrollView {
-
                     VStack{
                                         
                         if self.GregorianDateDdata != nil {
@@ -88,7 +90,7 @@ struct Home: View {
                                             .foregroundColor(.white)
                                             .padding(.horizontal, 10)
                                         }
-                                        .background(Color.red)
+                                        .background(Color.green)
                                         
                                         ZStack {
                                             VStack {
@@ -166,9 +168,9 @@ struct Home: View {
                                 .padding(.leading, 10)
     //                            Divider()
     //
-                                Text(">>>")
-
-    //                            Divider()
+                                Image(systemName: "arrowtriangle.forward.fill")
+                                    .foregroundColor(.white)
+                                //Divider()
                                 
                                 // SELECTED CALENDAR
                                 
@@ -186,7 +188,7 @@ struct Home: View {
                                             }
                                             .padding(.vertical)
                                         }
-                                        .background(Color.black)
+                                        .background(Color.blue)
                                         
                                         ZStack {
                                             VStack {
@@ -217,15 +219,14 @@ struct Home: View {
                                 
                             }
                          
-                            Divider()
+                            Spacer()
+                            Divider().background(Color.white).frame(height: 10)
                             
                             VStack {
-                                HStack {
-                                    Text("Selected Date")
-                                        .font(.system(size: 20, weight: .bold, design: .default))
-                                    Text(">>>")
+                                HStack {                                 Spacer()
                                     Text("\(self.selectedDateData.Date) \(self.selectedDateData.Month) \(self.selectedDateData.Year)")
                                         .font(.system(size: 20, weight: .bold, design: .default))
+                                        .foregroundColor(.white)
                                     Spacer()
 
                                 }
@@ -235,8 +236,6 @@ struct Home: View {
                         }
                     }
 //                    .frame(width: geometry.size.width)
-                    .padding(.top, 30)
-                    
                     
                 }
                 
@@ -256,6 +255,7 @@ struct Home: View {
         
     }
     
+   
     
     func updateDate() {
         
