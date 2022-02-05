@@ -19,7 +19,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                RadialGradient(gradient: Gradient(colors: [.pink, .red]), center: .center, startRadius: 100, endRadius: 470)
+                RadialGradient(gradient: Gradient(colors: [.secondary, .gray]), center: .center, startRadius: 100, endRadius: 470)
                     .edgesIgnoringSafeArea(.all)
                 Home()
             }
